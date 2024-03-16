@@ -6,6 +6,12 @@ display_words() {
     cat "data/$1.txt"
 }
 
+# Function to display a random word from the top 1000 words of a language
+display_random_word() {
+    echo "Displaying a random word for $1:"
+    shuf -n 1 "data/$1.txt"
+}
+
 # Function to learn languages by group
 learn_by_group() {
     echo "You have chosen the $1 group. The languages in this group are:"
@@ -13,6 +19,7 @@ learn_by_group() {
     do
         echo "$language"
         display_words "$language"
+        display_random_word "$language"
     done
 }
 
