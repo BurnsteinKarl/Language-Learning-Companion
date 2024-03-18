@@ -57,36 +57,41 @@ main_script() {
     echo "6. Indo-Aryan Languages Group"
 
     read -p "Enter your choice (1-6): " choice
-
-    case $choice in
-        1)
-            learn_by_group "Romance Languages" "Italian" "Spanish" "Portuguese"
-            repeat_session "Romance Languages" "Italian" "Spanish" "Portuguese"
-            ;;
-        2)
-            learn_by_group "Germanic Languages" "German" "Dutch" "Swedish"
-            repeat_session "Germanic Languages" "German" "Dutch" "Swedish"
-            ;;
-        3)
-            learn_by_group "Slavic Languages" "Russian" "Polish" "Czech"
-            repeat_session "Slavic Languages" "Russian" "Polish" "Czech"
-            ;;
-        4)
-            learn_by_group "Scandinavian Languages" "Danish" "Norwegian" "Swedish"
-            repeat_session "Scandinavian Languages" "Danish" "Norwegian" "Swedish"
-            ;;
-        5)
-            learn_by_group "East Asian Languages" "Mandarin Chinese" "Japanese" "Korean"
-            repeat_session "East Asian Languages" "Mandarin Chinese" "Japanese" "Korean"
-            ;;
-        6)
-            learn_by_group "Indo-Aryan Languages" "Hindi" "Bengali" "Punjabi"
-            repeat_session "Indo-Aryan Languages" "Hindi" "Bengali" "Punjabi"
-            ;;
-        *)
-            echo "Invalid choice. Please enter a number between 1 and 6."
-            ;;
-    esac
+	case $choice in
+    	1)
+        	languages=("Romance Languages" "Italian" "Spanish" "Portuguese")
+	        learn_by_group "${languages[@]}"
+        	repeat_session "${languages[@]}"
+	        ;;
+    	2)
+        	languages=("Germanic Languages" "German" "Dutch" "Swedish")
+	        learn_by_group "${languages[@]}"
+	        repeat_session "${languages[@]}"
+        	;;
+    	3)
+        	languages=("Slavic Languages" "Russian" "Polish" "Czech")
+        	learn_by_group "${languages[@]}"
+	        repeat_session "${languages[@]}"
+        	;;
+    	4)
+	        languages=("Scandinavian Languages" "Danish" "Norwegian" "Swedish")
+        	learn_by_group "${languages[@]}"
+	        repeat_session "${languages[@]}"
+        	;;
+    	5)
+	        languages=("East Asian Languages" "Mandarin Chinese" "Japanese" "Korean")
+        	learn_by_group "${languages[@]}"
+	        repeat_session "${languages[@]}"
+        	;;
+    	6)
+	        languages=("Indo-Aryan Languages" "Hindi" "Bengali" "Punjabi")
+        	learn_by_group "${languages[@]}"
+	        repeat_session "${languages[@]}"
+        	;;
+    	*)
+	        echo "Invalid choice. Please enter a number between 1 and 6."
+        	;;
+	esac
 }
 
 main_script
