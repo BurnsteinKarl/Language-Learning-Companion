@@ -14,7 +14,7 @@ display_random_word() {
 
 # Function to learn languages by group
 learn_by_group() {
-    echo "You have chosen the $1 group. The languages in this group are:"
+    echo "You have chosen the $1 group. The languages^[[1;5D in this group are:"
     for language in "${@:2}"
     do
         echo "$language"
@@ -23,10 +23,17 @@ learn_by_group() {
     done
 }
 
+# Function to add a new language to a group
+add_language() {
+    read -p "Enter the name of the language you want to add: " new_language
+    languages+=("$new_language")
+    echo "$new_language has been added to the group."
+}
+
 # Function to repeat the learning session
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session or choose another language group? (repeat/choose/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, or add a new language? (repeat/choose/add/exit): " decision
         case $decision in
             repeat)
                 learn_by_group "$@"
@@ -34,12 +41,15 @@ repeat_session() {
             choose)
                 main_script
                 ;;
+            add)
+                add_language
+                ;;
             exit)
                 echo "Exiting the Language Learning Companion. Goodbye!"
                 exit 0
                 ;;
             *)
-                echo "Invalid choice. Please enter 'repeat', 'choose' or 'exit'."
+                echo "Invalid choice. Please enter 'repeat', 'choose', 'add' or 'exit'."
                 ;;
         esac
     done
