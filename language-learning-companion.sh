@@ -2,14 +2,22 @@
 
 # Function to display the top 1000 words of a language
 display_words() {
-    echo "Displaying top 1000 words for $1:"
-    cat "data/$1.txt"
+    if [ -f "data/$1.txt" ]; then
+        echo "Displaying top 1000 words for $1:"
+        cat "data/$1.txt"
+    else
+        echo "File for $1 does not exist."
+    fi
 }
 
 # Function to display a random word from the top 1000 words of a language
 display_random_word() {
-    echo "Displaying a random word for $1:"
-    shuf -n 1 "data/$1.txt"
+    if [ -f "data/$1.txt" ]; then
+        echo "Displaying a random word for $1:"
+        shuf -n 1 "data/$1.txt"
+    else
+        echo "File for $1 does not exist."
+    fi
 }
 
 # Function to learn languages by group
