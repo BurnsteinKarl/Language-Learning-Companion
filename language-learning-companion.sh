@@ -20,15 +20,15 @@ display_random_word() {
     fi
 }
 
-# Function to learn languages by group
-learn_by_group() {
-    echo "You have chosen the $1 group. The languages in this group are:"
-    for language in "${@:2}"
-    do
-        echo "$language"
-        display_words "$language"
-        display_random_word "$language"
-    done
+# Function to add a new language to a group
+add_language() {
+    read -p "Enter the name of the language you want to add: " new_language
+    if [[ " ${languages[@]} " =~ " ${new_language} " ]]; then
+        echo "$new_language already exists in the group."
+    else
+        languages+=("$new_language")
+        echo "$new_language has been added to the group."
+    fi
 }
 
 # Function to add a new language to a group
