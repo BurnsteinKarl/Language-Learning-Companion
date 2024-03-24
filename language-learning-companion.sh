@@ -41,8 +41,12 @@ add_language() {
 # Function to remove a language from a group
 remove_language() {
     read -p "Enter the name of the language you want to remove: " remove_language
-    languages=("${languages[@]/$remove_language}")
-    echo "$remove_language has been removed from the group."
+    if [[ " ${languages[@]} " =~ " ${remove_language} " ]]; then
+        languages=("${languages[@]/$remove_language}")
+        echo "$remove_language has been removed from the group."
+    else
+        echo "$remove_language does not exist in the group."
+    fi
 }
 
 # Function to repeat the learning session
