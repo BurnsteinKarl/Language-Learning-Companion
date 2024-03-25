@@ -49,10 +49,18 @@ remove_language() {
     fi
 }
 
+# Function to list all languages in the current group
+list_languages() {
+    echo "The current languages in the group are:"
+    for language in "${languages[@]}"; do
+        echo "$language"
+    done
+}
+
 # Function to repeat the learning session
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, or remove a language? (repeat/choose/add/remove/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, or list all languages? (repeat/choose/add/remove/list/exit): " decision
         case $decision in
             repeat)
                 learn_by_group "$@"
@@ -66,12 +74,15 @@ repeat_session() {
             remove)
                 remove_language
                 ;;
+            list)
+                list_languages
+                ;;
             exit)
                 echo "Exiting the Language Learning Companion. Goodbye!"
                 exit 0
                 ;;
             *)
-                echo "Invalid choice. Please enter 'repeat', 'choose', 'add', 'remove' or 'exit'."
+                echo "Invalid choice. Please enter 'repeat', 'choose', 'add', 'remove', 'list' or 'exit'."
                 ;;
         esac
     done
