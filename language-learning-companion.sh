@@ -34,8 +34,16 @@ add_language() {
 # Function to add a new language to a group
 add_language() {
     read -p "Enter the name of the language you want to add: " new_language
-    languages+=("$new_language")
-    echo "$new_language has been added to the group."
+    if [ -f "data/$new_language.txt" ]; then
+        if [[ " ${languages[@]} " =~ " ${new_language} " ]]; then
+            echo "$new_language already exists in the group."
+        else
+            languages+=("$new_language")
+            echo "$new_language has been added to the group."
+        fi
+    else
+        echo "File for $new_language does not exist."
+    fi
 }
 
 # Function to remove a language from a group
