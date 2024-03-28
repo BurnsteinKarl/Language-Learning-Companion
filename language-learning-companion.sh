@@ -20,16 +20,6 @@ display_random_word() {
     fi
 }
 
-# Function to add a new language to a group
-add_language() {
-    read -p "Enter the name of the language you want to add: " new_language
-    if [[ " ${languages[@]} " =~ " ${new_language} " ]]; then
-        echo "$new_language already exists in the group."
-    else
-        languages+=("$new_language")
-        echo "$new_language has been added to the group."
-    fi
-}
 
 # Function to add a new language to a group
 add_language() {
@@ -65,10 +55,20 @@ list_languages() {
     done
 }
 
+# Function to display the top 10 words of a language
+display_top10_words() {
+    if [ -f "data/$1.txt" ]; then
+        echo "Displaying top 10 words for $1:"
+        head -10 "data/$1.txt"
+    else
+        echo "File for $1 does not exist."
+    fi
+}
+
 # Function to repeat the learning session
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, or list all languages? (repeat/choose/add/remove/list/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages or display top 10 words? (repeat/choose/add/remove/list/top10/exit): " decision
         case $decision in
             repeat)
                 learn_by_group "$@"
@@ -85,12 +85,16 @@ repeat_session() {
             list)
                 list_languages
                 ;;
+            top10)
+                read -p "Enter the name of the language: " language
+                display_top10_words "$language"
+                ;;
             exit)
                 echo "Exiting the Language Learning Companion. Goodbye!"
                 exit 0
                 ;;
             *)
-                echo "Invalid choice. Please enter 'repeat', 'choose', 'add', 'remove', 'list' or 'exit'."
+                echo "Invalid choice. Please enter 'repeat', 'choose', 'add', 'remove', 'list', 'top10' or 'exit'."
                 ;;
         esac
     done
