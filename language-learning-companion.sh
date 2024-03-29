@@ -100,8 +100,17 @@ repeat_session() {
     done
 }
 
-# Main script
+# Check if data directory exists, if not create it
+check_data_dir() {
+    if [ ! -d "data" ]; then
+        mkdir "data"
+        echo "Data directory created."
+    fi
+}
+
+# Call the function at the beginning of the main script
 main_script() {
+    check_data_dir
     echo "Welcome to the Language Learning Companion!"
     echo "Please choose a language group to learn:"
     echo "1. Romance Languages Group"
