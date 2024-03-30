@@ -108,7 +108,17 @@ check_data_dir() {
     fi
 }
 
-# Call the function at the beginning of the main script
+# Function to check if language files exist
+check_language_files() {
+    for language in "${languages[@]}"; do
+        if [ ! -f "data/$language.txt" ]; then
+            echo "File for $language does not exist. Removing from group."
+            languages=("${languages[@]/$language}")
+        fi
+    done
+}
+
+# The main_script function
 main_script() {
     check_data_dir
     echo "Welcome to the Language Learning Companion!"
@@ -145,6 +155,7 @@ main_script() {
             ;;
     esac
 
+    check_language_files
     learn_by_group "${languages[@]}"
     repeat_session "${languages[@]}"
 }
