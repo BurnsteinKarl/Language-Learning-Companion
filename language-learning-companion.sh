@@ -20,7 +20,6 @@ display_random_word() {
     fi
 }
 
-
 # Function to add a new language to a group
 add_language() {
     read -p "Enter the name of the language you want to add: " new_language
@@ -33,6 +32,17 @@ add_language() {
         fi
     else
         echo "File for $new_language does not exist."
+        read -p "Do you want to create a new file for $new_language? (y/n): " decision
+        if [ "$decision" = "y" ]; then
+            touch "data/$new_language.txt"
+            echo "Enter the top 1000 words for $new_language, separated by new lines:"
+            read -d '' -a words
+            printf "%s\n" "${words[@]}" > "data/$new_language.txt"
+            languages+=("$new_language")
+            echo "$new_language has been added to the group."
+        else
+            echo "Not creating a new file for $new_language."
+        fi
     fi
 }
 
