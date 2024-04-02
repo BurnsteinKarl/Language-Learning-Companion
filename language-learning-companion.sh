@@ -75,10 +75,25 @@ display_top10_words() {
     fi
 }
 
+# Function to search for a specific word in a language file
+search_word() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        read -p "Enter the word you want to search for: " word
+        if grep -q "$word" "data/$language.txt"; then
+            echo "$word is in the top 1000 words of $language."
+        else
+            echo "$word is not in the top 1000 words of $language."
+        fi
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
 # Function to repeat the learning session
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages or display top 10 words? (repeat/choose/add/remove/list/top10/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words or search for a word? (repeat/choose/add/remove/list/top10/search/exit): " decision
         case $decision in
             repeat)
                 learn_by_group "$@"
@@ -99,12 +114,15 @@ repeat_session() {
                 read -p "Enter the name of the language: " language
                 display_top10_words "$language"
                 ;;
+            search)
+                search_word
+                ;;
             exit)
                 echo "Exiting the Language Learning Companion. Goodbye!"
                 exit 0
                 ;;
             *)
-                echo "Invalid choice. Please enter 'repeat', 'choose', 'add', 'remove', 'list', 'top10' or 'exit'."
+                echo "Invalid choice. Please enter 'repeat', 'choose', 'add', 'remove', 'list', 'top10', 'search' or 'exit'."
                 ;;
         esac
     done
