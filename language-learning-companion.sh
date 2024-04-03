@@ -90,11 +90,27 @@ search_word() {
     fi
 }
 
+# Function to update the top 1000 words of a language
+update_words() {
+    read -p "Enter the name of the language you want to update: " update_language
+    if [ -f "data/$update_language.txt" ]; then
+        echo "Enter the updated top 1000 words for $update_language, separated by new lines:"
+        read -d '' -a words
+        printf "%s\n" "${words[@]}" > "data/$update_language.txt"
+        echo "The top 1000 words for $update_language have been updated."
+    else
+        echo "File for $update_language does not exist."
+    fi
+}
+
 # Function to repeat the learning session
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words or search for a word? (repeat/choose/add/remove/list/top10/search/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, search for a word, or update words? (repeat/choose/add/remove/list/top10/search/update/exit): " decision
         case $decision in
+            update)
+                update_words
+                ;;
             repeat)
                 learn_by_group "$@"
                 ;;
