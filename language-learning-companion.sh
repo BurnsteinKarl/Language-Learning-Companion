@@ -90,10 +90,21 @@ search_word() {
     fi
 }
 
+# Function to backup the language file before updating
+backup_language_file() {
+    if [ -f "data/$1.txt" ]; then
+        cp "data/$1.txt" "data/$1_backup.txt"
+        echo "Backup for $1 created."
+    else
+        echo "File for $1 does not exist."
+    fi
+}
+
 # Function to update the top 1000 words of a language
 update_words() {
     read -p "Enter the name of the language you want to update: " update_language
     if [ -f "data/$update_language.txt" ]; then
+        backup_language_file "$update_language"
         echo "Enter the updated top 1000 words for $update_language, separated by new lines:"
         read -d '' -a words
         printf "%s\n" "${words[@]}" > "data/$update_language.txt"
