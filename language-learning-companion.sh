@@ -114,11 +114,25 @@ update_words() {
     fi
 }
 
-# Function to repeat the learning session
+# Function to restore a language file from a backup
+restore_language_file() {
+    read -p "Enter the name of the language you want to restore: " restore_language
+    if [ -f "data/$restore_language_backup.txt" ]; then
+        cp "data/$restore_language_backup.txt" "data/$restore_language.txt"
+        echo "Restored $restore_language from backup."
+    else
+        echo "Backup file for $restore_language does not exist."
+    fi
+}
+
+# Modify the repeat_session function to include the restore option
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, search for a word, or update words? (repeat/choose/add/remove/list/top10/search/update/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, search for a word, update words, or restore a language file? (repeat/choose/add/remove/list/top10/search/update/restore/exit): " decision
         case $decision in
+            restore)
+                restore_language_file
+                ;;
             update)
                 update_words
                 ;;
