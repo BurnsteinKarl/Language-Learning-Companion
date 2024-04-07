@@ -124,12 +124,25 @@ restore_language_file() {
         echo "Backup file for $restore_language does not exist."
     fi
 }
+# Function to display the least common 10 words of a language
+display_bottom10_words() {
+    if [ -f "data/$1.txt" ]; then
+        echo "Displaying least common 10 words for $1:"
+        tail -10 "data/$1.txt"
+    else
+        echo "File for $1 does not exist."
+    fi
+}
 
-# Modify the repeat_session function to include the restore option
+# Repeat_session function
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, search for a word, update words, or restore a language file? (repeat/choose/add/remove/list/top10/search/update/restore/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, update words, or restore a language file? (repeat/choose/add/remove/list/top10/bottom10/search/update/restore/exit): " decision
         case $decision in
+            bottom10)
+                read -p "Enter the name of the language: " language
+                display_bottom10_words "$language"
+                ;;
             restore)
                 restore_language_file
                 ;;
