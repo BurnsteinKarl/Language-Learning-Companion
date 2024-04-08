@@ -134,11 +134,25 @@ display_bottom10_words() {
     fi
 }
 
-# Repeat_session function
+# Function to display the number of words in a language file
+display_word_count() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        word_count=$(wc -l < "data/$language.txt")
+        echo "The $language file contains $word_count words."
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
+# Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, update words, or restore a language file? (repeat/choose/add/remove/list/top10/bottom10/search/update/restore/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, update words, restore a language file, or display word count? (repeat/choose/add/remove/list/top10/bottom10/search/update/restore/count/exit): " decision
         case $decision in
+            count)
+                display_word_count
+                ;;
             bottom10)
                 read -p "Enter the name of the language: " language
                 display_bottom10_words "$language"
