@@ -145,11 +145,25 @@ display_word_count() {
     fi
 }
 
+# Function to sort the words in a language file
+sort_words() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        sort "data/$language.txt" -o "data/$language.txt"
+        echo "The words in $language file have been sorted alphabetically."
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, update words, restore a language file, or display word count? (repeat/choose/add/remove/list/top10/bottom10/search/update/restore/count/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, update words, restore a language file, sort words, or display word count? (repeat/choose/add/remove/list/top10/bottom10/search/update/restore/sort/count/exit): " decision
         case $decision in
+            sort)
+                sort_words
+                ;;
             count)
                 display_word_count
                 ;;
