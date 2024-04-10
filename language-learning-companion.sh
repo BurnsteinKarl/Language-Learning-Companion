@@ -156,11 +156,30 @@ sort_words() {
     fi
 }
 
+# Function to check if a word exists in all language files
+check_word_in_all_languages() {
+    read -p "Enter the word you want to check: " word
+    for language in "${languages[@]}"; do
+        if [ -f "data/$language.txt" ]; then
+            if grep -q "$word" "data/$language.txt"; then
+                echo "$word is in the top 1000 words of $language."
+            else
+                echo "$word is not in the top 1000 words of $language."
+            fi
+        else
+            echo "File for $language does not exist."
+        fi
+    done
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, update words, restore a language file, sort words, or display word count? (repeat/choose/add/remove/list/top10/bottom10/search/update/restore/sort/count/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, or display word count? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/exit): " decision
         case $decision in
+            checkall)
+                check_word_in_all_languages
+                ;;
             sort)
                 sort_words
                 ;;
