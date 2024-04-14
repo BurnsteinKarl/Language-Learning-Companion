@@ -171,12 +171,25 @@ check_word_in_all_languages() {
         fi
     done
 }
+# Function to display the most common word in a language file
+display_most_common_word() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        most_common_word=$(sort "data/$language.txt" | uniq -c | sort -nr | head -1)
+        echo "The most common word in $language file is: $most_common_word."
+    else
+        echo "File for $language does not exist."
+    fi
+}
 
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, or display word count? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, or display most common word? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/exit): " decision
         case $decision in
+            mostcommon)
+                display_most_common_word
+                ;;
             checkall)
                 check_word_in_all_languages
                 ;;
