@@ -171,6 +171,7 @@ check_word_in_all_languages() {
         fi
     done
 }
+
 # Function to display the most common word in a language file
 display_most_common_word() {
     read -p "Enter the name of the language: " language
@@ -182,11 +183,26 @@ display_most_common_word() {
     fi
 }
 
+# Function to compare two language files and find common words
+compare_languages() {
+    read -p "Enter the name of the first language: " language1
+    read -p "Enter the name of the second language: " language2
+    if [ -f "data/$language1.txt" ] && [ -f "data/$language2.txt" ]; then
+        echo "Common words in $language1 and $language2:"
+        comm -12 <(sort "data/$language1.txt") <(sort "data/$language2.txt")
+    else
+        echo "One or both files for $language1 and $language2 do not exist."
+    fi
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, or display most common word? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, or compare two languages? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/compare/exit): " decision
         case $decision in
+            compare)
+                compare_languages
+                ;;
             mostcommon)
                 display_most_common_word
                 ;;
