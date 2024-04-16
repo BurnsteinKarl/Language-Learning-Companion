@@ -195,11 +195,25 @@ compare_languages() {
     fi
 }
 
+# Function to display the least common word in a language file
+display_least_common_word() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        least_common_word=$(sort "data/$language.txt" | uniq -c | sort -n | head -1)
+        echo "The least common word in $language file is: $least_common_word."
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, or compare two languages? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/compare/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, display least common word, or compare two languages? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/leastcommon/compare/exit): " decision
         case $decision in
+            leastcommon)
+                display_least_common_word
+                ;;
             compare)
                 compare_languages
                 ;;
