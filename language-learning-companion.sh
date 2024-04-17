@@ -205,12 +205,28 @@ display_least_common_word() {
         echo "File for $language does not exist."
     fi
 }
+# Function to display the total number of unique words across all language files
+display_total_unique_words() {
+    total_unique_words=0
+    for language in "${languages[@]}"; do
+        if [ -f "data/$language.txt" ]; then
+            unique_words=$(sort "data/$language.txt" | uniq | wc -l)
+            total_unique_words=$((total_unique_words + unique_words))
+        else
+            echo "File for $language does not exist."
+        fi
+    done
+    echo "The total number of unique words across all languages in the group is: $total_unique_words."
+}
 
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, display least common word, or compare two languages? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/leastcommon/compare/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, display least common word, compare two languages, or display total unique words? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/leastcommon/compare/totalunique/exit): " decision
         case $decision in
+            totalunique)
+                display_total_unique_words
+                ;;
             leastcommon)
                 display_least_common_word
                 ;;
