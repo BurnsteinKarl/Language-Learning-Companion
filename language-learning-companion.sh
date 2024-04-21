@@ -218,7 +218,27 @@ display_total_unique_words() {
     done
     echo "The total number of unique words across all languages in the group is: $total_unique_words."
 }
+# Function to display the longest word in a language file
+display_longest_word() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        longest_word=$(awk '{ if (length > max) {max = length; longest = $0} } END { print longest }' "data/$language.txt")
+        echo "The longest word in $language file is: $longest_word."
+    else
+        echo "File for $language does not exist."
+    fi
+}
 
+# Function to display the shortest word in a language file
+display_shortest_word() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        shortest_word=$(awk '{ if (length < min || min == 0) {min = length; shortest = $0} } END { print shortest }' "data/$language.txt")
+        echo "The shortest word in $language file is: $shortest_word."
+    else
+        echo "File for $language does not exist."
+    fi
+}
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
