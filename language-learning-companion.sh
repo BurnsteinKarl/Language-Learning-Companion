@@ -239,11 +239,27 @@ display_shortest_word() {
         echo "File for $language does not exist."
     fi
 }
+# Function to display the average word length in a language file
+display_average_word_length() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        total_length=$(awk '{ total += length } END { print total }' "data/$language.txt")
+        word_count=$(wc -l < "data/$language.txt")
+        average_length=$(echo "scale=2; $total_length / $word_count" | bc)
+        echo "The average word length in $language file is: $average_length."
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, display least common word, compare two languages, or display total unique words? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/leastcommon/compare/totalunique/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, display least common word, compare two languages, display total unique words, display average word length, or exit? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/leastcommon/compare/totalunique/averagelength/exit): " decision
         case $decision in
+            averagelength)
+                display_average_word_length
+                ;;
             totalunique)
                 display_total_unique_words
                 ;;
