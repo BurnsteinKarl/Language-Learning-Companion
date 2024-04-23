@@ -251,12 +251,28 @@ display_average_word_length() {
         echo "File for $language does not exist."
     fi
 }
+# Function to display the total number of words across all language files
+display_total_words() {
+    total_words=0
+    for language in "${languages[@]}"; do
+        if [ -f "data/$language.txt" ]; then
+            word_count=$(wc -l < "data/$language.txt")
+            total_words=$((total_words + word_count))
+        else
+            echo "File for $language does not exist."
+        fi
+    done
+    echo "The total number of words across all languages in the group is: $total_words."
+}
 
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, display least common word, compare two languages, display total unique words, display average word length, or exit? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/leastcommon/compare/totalunique/averagelength/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, display least common word, compare two languages, display total unique words, display average word length, display total words, or exit? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/leastcommon/compare/totalunique/averagelength/totalwords/exit): " decision
         case $decision in
+            totalwords)
+                display_total_words
+                ;;
             averagelength)
                 display_average_word_length
                 ;;
