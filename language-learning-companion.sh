@@ -265,6 +265,17 @@ display_total_words() {
     echo "The total number of words across all languages in the group is: $total_words."
 }
 
+# Function to display the top 5 most common words in a language file
+display_top5_most_common_words() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        echo "Displaying top 5 most common words for $language:"
+        sort "data/$language.txt" | uniq -c | sort -nr | head -5
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
