@@ -276,11 +276,25 @@ display_top5_most_common_words() {
     fi
 }
 
+# Function to display the top 5 least common words in a language file
+display_top5_least_common_words() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        echo "Displaying top 5 least common words for $language:"
+        sort "data/$language.txt" | uniq -c | sort -n | head -5
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
-        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, display least common word, compare two languages, display total unique words, display average word length, display total words, or exit? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/leastcommon/compare/totalunique/averagelength/totalwords/exit): " decision
+        read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, display least common 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, display least common word, compare two languages, display total unique words, display average word length, display total words, display top 5 least common words, or exit? (repeat/choose/add/remove/list/top10/bottom10/search/checkall/update/restore/sort/count/mostcommon/leastcommon/compare/totalunique/averagelength/totalwords/leastcommon5/exit): " decision
         case $decision in
+            leastcommon5)
+                display_top5_least_common_words
+                ;;
             totalwords)
                 display_total_words
                 ;;
