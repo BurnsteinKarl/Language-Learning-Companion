@@ -286,6 +286,18 @@ display_top5_most_common_words() {
     fi
 }
 
+# Function to display the frequency of a specific word in a language file
+display_word_frequency() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        read -p "Enter the word you want to check the frequency of: " word
+        word_frequency=$(grep -o "$word" "data/$language.txt" | wc -l)
+        echo "The word '$word' appears $word_frequency times in the $language file."
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
