@@ -298,6 +298,19 @@ display_word_frequency() {
     fi
 }
 
+# Function to display the median word in a language file
+display_median_word() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        word_count=$(wc -l < "data/$language.txt")
+        median_position=$((word_count / 2))
+        median_word=$(sed "${median_position}q;d" "data/$language.txt")
+        echo "The median word in $language file is: $median_word."
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
