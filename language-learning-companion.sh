@@ -311,11 +311,28 @@ display_median_word() {
     fi
 }
 
+# Function to display the total number of characters across all language files
+display_total_characters() {
+    total_characters=0
+    for language in "${languages[@]}"; do
+        if [ -f "data/$language.txt" ]; then
+            character_count=$(wc -m < "data/$language.txt")
+            total_characters=$((total_characters + character_count))
+        else
+            echo "File for $language does not exist."
+        fi
+    done
+    echo "The total number of characters across all languages in the group is: $total_characters."
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
         read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, compare two languages, display top 5 most common words, or exit? (repeat/choose/add/remove/list/top10/search/checkall/update/restore/sort/count/mostcommon/compare/mostcommon5/exit): " decision
         case $decision in
+            totalcharacters)
+                display_total_characters
+                ;;
             mostcommon5)
                 display_top5_most_common_words
                 ;;
