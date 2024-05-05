@@ -325,11 +325,25 @@ display_total_characters() {
     echo "The total number of characters across all languages in the group is: $total_characters."
 }
 
+# Function to display the top 5 shortest words in a language file
+display_top5_shortest_words() {
+    read -p "Enter the name of the language: " language
+    if [ -f "data/$language.txt" ]; then
+        echo "Displaying top 5 shortest words for $language:"
+        awk '{ print length, $0 }' "data/$language.txt" | sort -n | cut -d' ' -f2- | head -5
+    else
+        echo "File for $language does not exist."
+    fi
+}
+
 # Update the repeat_session function to include the new feature
 repeat_session() {
     while true; do
         read -p "Do you want to repeat the session, choose another language group, add a new language, remove a language, list all languages, display top 10 words, search for a word, check a word in all languages, update words, restore a language file, sort words, display word count, display most common word, compare two languages, display top 5 most common words, or exit? (repeat/choose/add/remove/list/top10/search/checkall/update/restore/sort/count/mostcommon/compare/mostcommon5/exit): " decision
         case $decision in
+            shortest5)
+                display_top5_shortest_words
+                ;;
             totalcharacters)
                 display_total_characters
                 ;;
